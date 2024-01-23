@@ -75,7 +75,7 @@ User Report Information: Provides detailed information about the user actions.
 
 ## Link
 Visit the blog for additional information and updates.
-https://github.com/TopSpeed0/CreateDisabledUserReport
+[https://github.com/TopSpeed0/CreateDisabledUserReport](https://github.com/TopSpeed0/CreateDisabledUserReport)
 
 **Caution:** Be cautious when using the script, especially if it involves disabling or deleting user accounts. Always review the generated reports before taking any action.
 
