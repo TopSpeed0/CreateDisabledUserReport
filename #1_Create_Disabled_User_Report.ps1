@@ -19,7 +19,7 @@ if user is enabled and have a LWD ( not Valid or in far fucher) that pass it wil
 if user have LDD over 180 days it will set disabled.
 
 .LINK
-https://eizhak9.wordpress.com/
+https://github.com/TopSpeed0/CreateDisabledUserReport.git
 #>
 Clear-Host
 
@@ -45,7 +45,6 @@ $_ERROR_Counter = 0
 # Set Location and working Directory.
 $scriptDir = $PSScriptRoot ; $HomeDir = Split-Path $scriptDir  -Parent 
 Set-Location $HomeDir  ; write-host "Working from: $HomeDir" -f black -b DarkYellow
-$Infraops = Join-Path $HomeDir "Infraops.psm1" ; Import-Module $Infraops
 
 # Logs Location and CSV path
 $logDir = "$HomeDir\LOG"
