@@ -6,14 +6,26 @@ This PowerShell script, titled `#1_Create_Disabled_User_Report.ps1`, is designed
 
 ## Table of Contents
 
+- [Prerequisites](#Prerequisites)
+- [Configuration](#Configuration)
 - [Synopsis](#synopsis)
 - [Description](#description)
 - [Example](#example)
 - [Notes](#notes)
 - [Link](#link)
 
-## Synopsis
 
+## Prerequisites
+The script requires the Active Directory module to be imported.
+
+## Configuration
+Adjust the script parameters, such as the number of days for disabled users and log paths, according to your environment.
+Logging
+The script generates log files in the specified directory for auditing and troubleshooting.
+
+
+
+## Synopsis
 ```powershell
 .\#1_Create_Disabled_User_Report.ps1
 ```
@@ -41,6 +53,12 @@ Users disabled for 90 days are added to the delete report.
 Users with a valid LWD that has passed and are not disabled are set to disabled.
 Enabled users with an invalid or future LWD that has passed are set to disabled.
 Users with a last logon date over 180 days ago are set to disabled.
+
+## Output
+The script produces two CSV files:
+
+Approved Users for Deletion: Contains users identified for deletion.
+User Report Information: Provides detailed information about the user actions.
 
 ## Link
 Visit the blog for additional information and updates.
