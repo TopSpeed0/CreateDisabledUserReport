@@ -67,6 +67,9 @@ Users with a last logon date over 180 days ago are set to disabled.
 ## Output
 The script produces two CSV files:
 
+ * Delete_Disabled_User90days_Approved.csv: Approved users to be deleted.
+ * Delete_Disabled_UserReport_info.csv: Information about the disabled users.
+
 Approved Users for Deletion: Contains users identified for deletion.
 User Report Information: Provides detailed information about the user actions.
 
