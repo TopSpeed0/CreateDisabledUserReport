@@ -8,9 +8,11 @@ This PowerShell script, titled `#1_Create_Disabled_User_Report.ps1`, is designed
 
 - [Prerequisites](#Prerequisites)
 - [Configuration](#Configuration)
+- [Logging](#Logging)
 - [Synopsis](#synopsis)
 - [Description](#description)
 - [Example](#example)
+- [Output](#Output)
 - [Notes](#notes)
 - [Link](#link)
 
@@ -20,10 +22,9 @@ The script requires the Active Directory module to be imported.
 
 ## Configuration
 Adjust the script parameters, such as the number of days for disabled users and log paths, according to your environment.
-Logging
+
+## Logging
 The script generates log files in the specified directory for auditing and troubleshooting.
-
-
 
 ## Synopsis
 ```powershell
