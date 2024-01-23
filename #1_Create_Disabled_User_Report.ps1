@@ -64,7 +64,7 @@ if (!(Test-Path $csvpath)) {
 $logFile = "$logDir\$(get-date -Format 'dd_MM_yyyy_hh.mm.ss')_Delete_Disabled_User90dyas.log"
 
 # Start Transcript for enable for debug
-# Start-Transcript -Path  "c:\Scripts\INFRAOPS\LOG\$(get-date -Format 'dd_MM_yyyy_hh.mm.ss')_Delete_Disabled_User90d_Transcript.log" -Force
+# Start-Transcript -Path  "c:\Scripts\SYSTEM\LOG\$(get-date -Format 'dd_MM_yyyy_hh.mm.ss')_Delete_Disabled_User90d_Transcript.log" -Force
 
 # Script Start Info
 $_event = "$(Get-datenow) | INFO Start Script of #1 Create Disabled User Report of $daystoex-days"
@@ -94,16 +94,16 @@ $params = @{
     Properties = $Properties
 }
 # SearchBase 1
-$params.SearchBase = "OU=Privileged User Accounts,OU=Privileged Accounts,DC=cognyte,DC=local"
+$params.SearchBase = "OU=Privileged User Accounts,OU=Privileged Accounts,DC=domian,DC=local"
 $UsersFilter += Get-ADUser @params
 
 # SearchBase 2
-$params.SearchBase = "OU=Users,OU=Sites,DC=domain,DC=local"
+$params.SearchBase = "OU=Users,OU=Org,DC=domain,DC=local"
 $UsersFilter += Get-ADUser @params
 
 # filter OU
-$UsersFilter = $UsersFilter | Where-Object { $_.DistinguishedName -notmatch "OU=Automation Users,OU=site1,OU=Users,OU=Sites,DC=domain,DC=local"}
-$UsersFilter = $UsersFilter | Where-Object { $_.DistinguishedName -notmatch "OU=Shared Accounts,OU=site1,OU=Users,OU=Sites,DC=domain,DC=local"}
+$UsersFilter = $UsersFilter | Where-Object { $_.DistinguishedName -notmatch "OU=Automation Users,OU=site1,OU=Users,OU=Org,DC=domain,DC=local"}
+$UsersFilter = $UsersFilter | Where-Object { $_.DistinguishedName -notmatch "OU=Shared Accounts,OU=site1,OU=Users,OU=Org,DC=domain,DC=local"}
 $totalUsers = $UsersFilter.Count # Count the users for % report
 
 # Sorting the Enable and Disabled.
@@ -455,8 +455,8 @@ Write-Progress -Activity "Processing Users" -Status "Complete" -Completed
 
 # Report Creation
 write-host " "
-$newCSV = "C:\Scripts\INFRAOPS\CSV\$(get-date -Format 'dd_MM_yyyy_HH.mm.ss')_Delete_Disabled_User90dyas_Approved.csv"
-$infonewCSV = "C:\Scripts\INFRAOPS\CSV\$(get-date -Format 'dd_MM_yyyy_HH.mm.ss')_Delete_Disabled_UserReportifo.csv"
+$newCSV = "C:\Scripts\SYSTEM\CSV\$(get-date -Format 'dd_MM_yyyy_HH.mm.ss')_Delete_Disabled_User90dyas_Approved.csv"
+$infonewCSV = "C:\Scripts\SYSTEM\CSV\$(get-date -Format 'dd_MM_yyyy_HH.mm.ss')_Delete_Disabled_UserReportifo.csv"
 if (![string]::IsNullOrEmpty($approvedList) ) {
     # finall log
     if ($_ERROR_Counter -eq 0) {
