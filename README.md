@@ -8,6 +8,7 @@ This PowerShell script, titled `#1_Create_Disabled_User_Report.ps1`, is designed
 
 - [Prerequisites](#Prerequisites)
 - [Configuration](#Configuration)
+- [Installation](#Installation)
 - [Logging](#Logging)
 - [Synopsis](#synopsis)
 - [Description](#description)
@@ -22,6 +23,11 @@ The script requires the Active Directory module to be imported.
 
 ## Configuration
 Adjust the script parameters, such as the number of days for disabled users and log paths, according to your environment.
+
+## Installation
+Ensure the Active Directory PowerShell module is installed.
+Download the script.
+Run the script using the provided example command.
 
 ## Logging
 The script generates log files in the specified directory for auditing and troubleshooting.
@@ -47,6 +53,9 @@ PS C:\> .\#1_Create_Disabled_User_Report.ps1
 This command runs the script to remove disabled users.
 
 ## Notes
+ - LWD (Last Working Day): Refers to the last working day set by the termination ticket in HR and pushed from Oracle DB to Active Directory on the User extensionAttribute10.
+ - LLD (Last Logon Date): Represents the last login date of the user in Active Directory.
+
 The script looks for users with attribute 10 (Attrib10) to determine their LWD.
 Users with a valid LWD that has passed are added to the delete report.
 Users with an invalid or future LWD are set to disabled.
