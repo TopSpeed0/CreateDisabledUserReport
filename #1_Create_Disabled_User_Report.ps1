@@ -45,6 +45,7 @@ $_ERROR_Counter = 0
 # Set Location and working Directory.
 $scriptDir = $PSScriptRoot ; $HomeDir = Split-Path $scriptDir  -Parent 
 Set-Location $HomeDir  ; write-host "Working from: $HomeDir" -f black -b DarkYellow
+$Infraops = Join-Path $PSScriptRoot "Infraops.psm1" ; Import-Module $Infraops
 
 # Logs Location and CSV path
 $logDir = "$HomeDir\LOG"
