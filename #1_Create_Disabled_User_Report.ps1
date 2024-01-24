@@ -129,6 +129,33 @@ function Test-StringToDateTime {
     else { return $inputString }
 }
 
+function Test-overdue {
+    param ($curentLastLogonDate, $ExpiresDate)
+    # Write-host $("$curentLastLogonDate", "$ExpiresDate")
+    $date = $null
+    $overdue = $null
+    if ($curentLastLogonDate) {
+        try {
+            $date = Get-Date $curentLastLogonDate -ErrorAction Stop
+        }
+        catch {
+            $overdue = $null
+        }
+        finally {
+            if ($date) {
+                try { $overdue = [math]::floor($( (($ExpiresDate) - ($date)).TotalDays)) }
+                catch {
+                    $overdue = $null
+                }
+            }
+        }
+    }
+    else { 
+        $overdue = $null
+    }
+    return $overdue
+}
+
 # Date convetion From en-US to he-IL for batter consistancy of report with Excel.
 function new-UserReport {
     param (
@@ -343,17 +370,29 @@ function new-UserReport {
         }
     }
     if (!$enable) {
+        # Only Disabled Users are added to report
+        $UserReport = [PSCustomObject]@{
+            Name   = $user.name
+            SamAccountName   = $user.SamAccountName
+            Enabled   = $user.Enabled
+            DistinguishedName   = $user.DistinguishedName
+            lastUserLogonTime = Test-StringToDateTime $curentLastLogonDate
+            extensionAttribute10   = Test-StringToDateTime $user.extensionAttribute10
+            DisabledUserExprationDate = Test-StringToDateTime $ExpiresDate
+            DaysOverdue = Test-overdue -curentLastLogonDate $curentLastLogonDate -ExpiresDate $ExpiresDate
+            Today = Test-StringToDateTime $Today
+        }
         switch ($LWD) {
             'LWD-Invalid' { 
                 switch ($UserExpiredDateState) {
                     'D-LLD-NULL' { 
                         $params.Action = 'Add Report Delete'
-                        $approvedList = $user
+                        $approvedList = $UserReport
                         $report = new-UserReport @params
                     }
                     'D-LLD-Pass-90' {
                         $params.Action = 'Add Report Delete'
-                        $approvedList = $user
+                        $approvedList = $UserReport
                         $report = new-UserReport @params
                     }
                     'D-LLD-notPass-90' {
@@ -367,12 +406,12 @@ function new-UserReport {
                 switch ($UserExpiredDateState) {
                     'D-LLD-NULL' {
                         $params.Action = 'Add Report Delete'
-                        $approvedList = $user
+                        $approvedList = $UserReport
                         $report = new-UserReport @params
                     }
                     'D-LLD-Pass-90' {
                         $params.Action = 'Add Report Delete'
-                        $approvedList = $user
+                        $approvedList = $UserReport
                         $report = new-UserReport @params
                     }
                     'D-LLD-notPass-90' {
@@ -386,12 +425,12 @@ function new-UserReport {
                 switch ($UserExpiredDateState) {
                     'D-LLD-NULL' {
                         $params.Action = 'Add Report Delete'
-                        $approvedList = $user
+                        $approvedList = $UserReport
                         $report = new-UserReport @params
                     }
                     'D-LLD-Pass-90' {
                         $params.Action = 'Add Report Delete'
-                        $approvedList = $user
+                        $approvedList = $UserReport
                         $report = new-UserReport @params
                     }
                     'D-LLD-notPass-90' {
@@ -405,12 +444,12 @@ function new-UserReport {
                 switch ($UserExpiredDateState) {
                     'D-LLD-NULL' {
                         $params.Action = 'Add Report Delete'
-                        $approvedList = $user
+                        $approvedList = $UserReport
                         $report = new-UserReport @params
                     }
                     'D-LLD-Pass-90' {
                         $params.Action = 'Add Report Delete'
-                        $approvedList = $user
+                        $approvedList = $UserReport
                         $report = new-UserReport @params
                     }
                     'D-LLD-notPass-90' {
@@ -424,7 +463,11 @@ function new-UserReport {
         }
         
     }
-    return @($approvedList, $report)
+    if ($approvedList){
+        return @($approvedList, $report)
+    } else {
+        return @($null, $report)
+    }
     
 }
 # End of Functions Defention:
